@@ -1,7 +1,4 @@
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Deck {
@@ -35,5 +32,29 @@ public class Deck {
         } else {
             return null;
         }
+    }
+
+    public void shuffle(int times) {
+        if (times < 0) {
+            throw new IllegalArgumentException("Shuffle times cannot be negative");
+        }
+
+        for (int i = 0; i < times; i++) {
+            shuffleOnce();
+        }
+    }
+
+    private void shuffleOnce() {
+        List<Card> cardsList = new ArrayList<>(cards);
+        Random random = new Random();
+        for (int i = cardsList.size() - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1);
+
+            Card temp = cardsList.get(i);
+            cardsList.set(i, cardsList.get(j));
+            cardsList.set(j, temp);
+        }
+        cards.clear();
+        cards.addAll(cardsList);
     }
 }
